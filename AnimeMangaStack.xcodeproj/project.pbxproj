@@ -95,19 +95,6 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		9858298529F9A105008B0D2B /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				9858298629F9A127008B0D2B /* CustomFont.swift */,
-				9858299429FB024A008B0D2B /* LoadProfile.swift */,
-				98444F5A29FB618F001E6B67 /* MediaRow.swift */,
-				98F923E629FBA357002CFFC9 /* RateButton.swift */,
-				98F923E829FBA969002CFFC9 /* RateOptions.swift */,
-				98F923EC29FBADD6002CFFC9 /* ValuePicker.swift */,
-			);
-			name = Helpers;
-			sourceTree = "<group>";
-		};
 		9884DCA229F45AF1004E76A7 = {
 			isa = PBXGroup;
 			children = (
@@ -129,7 +116,7 @@
 			children = (
 				98A2911029F615D900868F50 /* Info.plist */,
 				9884DCAE29F45AF1004E76A7 /* AnimeMangaStackApp.swift */,
-				9858298529F9A105008B0D2B /* Helpers */,
+				98F923EF29FBB05A002CFFC9 /* Helpers */,
 				9858298429F8BADF008B0D2B /* Fonts */,
 				98A2910929F5FE7100868F50 /* Views */,
 				98A2910A29F5FE7B00868F50 /* ViewModels */,
@@ -184,6 +171,19 @@
 				9858298A29F9FE46008B0D2B /* Media.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		98F923EF29FBB05A002CFFC9 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				9858298629F9A127008B0D2B /* CustomFont.swift */,
+				9858299429FB024A008B0D2B /* LoadProfile.swift */,
+				98444F5A29FB618F001E6B67 /* MediaRow.swift */,
+				98F923E629FBA357002CFFC9 /* RateButton.swift */,
+				98F923E829FBA969002CFFC9 /* RateOptions.swift */,
+				98F923EC29FBADD6002CFFC9 /* ValuePicker.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
