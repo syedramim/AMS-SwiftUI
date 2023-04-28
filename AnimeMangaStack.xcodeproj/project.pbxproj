@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		981242D529FC32C200D1B795 /* RateAnimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981242D429FC32C200D1B795 /* RateAnimeView.swift */; };
 		982B6ADF29F63B42004FD9CF /* LaunchScreenHelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982B6ADE29F63B42004FD9CF /* LaunchScreenHelpView.swift */; };
 		98444F5929FB53AF001E6B67 /* MangaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98444F5829FB53AF001E6B67 /* MangaView.swift */; };
 		98444F5B29FB618F001E6B67 /* MediaRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98444F5A29FB618F001E6B67 /* MediaRow.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		981242D429FC32C200D1B795 /* RateAnimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateAnimeView.swift; sourceTree = "<group>"; };
 		982B6ADE29F63B42004FD9CF /* LaunchScreenHelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenHelpView.swift; sourceTree = "<group>"; };
 		98444F5829FB53AF001E6B67 /* MangaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaView.swift; sourceTree = "<group>"; };
 		98444F5A29FB618F001E6B67 /* MediaRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaRow.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				98F923E029FB874B002CFFC9 /* YoutubeVideoView.swift */,
 				98F923E429FB88AC002CFFC9 /* AnimeView.swift */,
 				98F923EA29FBAB9F002CFFC9 /* RateMangaView.swift */,
+				981242D429FC32C200D1B795 /* RateAnimeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 				9858298B29F9FE46008B0D2B /* Media.swift in Sources */,
 				98444F5B29FB618F001E6B67 /* MediaRow.swift in Sources */,
 				9858298F29FA2D2E008B0D2B /* MediaViewModel.swift in Sources */,
+				981242D529FC32C200D1B795 /* RateAnimeView.swift in Sources */,
 				9884DCBF29F45B34004E76A7 /* Anime.swift in Sources */,
 				9858298929F9FD51008B0D2B /* Manga.swift in Sources */,
 				98F923E529FB88AC002CFFC9 /* AnimeView.swift in Sources */,

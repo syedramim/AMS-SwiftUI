@@ -7,10 +7,13 @@
 
 import SwiftUI
 import Firebase
+import FirebaseFirestoreSwift
 
 struct ProfileView: View {
     @Environment(\.dismiss) private var dismiss
-    @StateObject private var profileVM = ProfileViewModel()
+    @EnvironmentObject var profileVM: ProfileViewModel
+    @FirestoreQuery(collectionPath: "profiles") var profiles: [Profile]
+    
     @State private var showAnimeView = false
     @State private var showMangaView = false
     @State private var showLoginView = false
@@ -30,38 +33,17 @@ struct ProfileView: View {
                             .scaledToFit()
                             .frame(width: 120, height: 120)
                             .clipShape(Circle())
-                            .overlay(Circle().stroke(Color.white, lineWidth: 5))
+                            .overlay(Circle().stroke(Color.accentColor, lineWidth: 5))
                             .padding(.top, 10)
                         
                         Text("@\(profileVM.email ?? "N/A: USER")")
-                            .font(.largeTitle)
+                            .font(.lovelo())
                             .bold()
-                            .foregroundColor(Color.white)
+                            .foregroundColor(Color.accentColor)
                             .padding(.bottom, 20)
                     }
+                    .minimumScaleFactor(0.5)
                     
-                    HStack(alignment: .top, spacing: 40) {
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text("Anime")
-                                .font(.title2)
-                                .bold()
-                                .foregroundColor(Color.purple)
-                                .padding(.bottom, 8)
-                            MediaViewModel.infoBox(title: "Stats", color: Color.purple)
-                            MediaViewModel.infoBox(title: "Recent", color: Color.purple)
-                        }
-                        
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text("Manga")
-                                .font(.title2)
-                                .bold()
-                                .foregroundColor(Color.purple)
-                                .padding(.bottom, 8)
-                            MediaViewModel.infoBox(title: "Stats", color: Color.purple)
-                            MediaViewModel.infoBox(title: "Recent", color: Color.purple)
-                        }
-                    }
-                    .padding([.horizontal, .bottom])
                     Spacer()
                 }
                 
@@ -77,6 +59,7 @@ struct ProfileView: View {
                         }
                     }
                     .foregroundColor(.accentColor)
+                    .font(.lovelo())
                 }
                 
                 
@@ -86,7 +69,6 @@ struct ProfileView: View {
                             print("Anime")
                         } label: {
                             Text("Anime Random")
-                                .foregroundColor(.white)
                                 .padding(.all, 10)
                                 .background(Color.purple.opacity(0.75))
                                 .cornerRadius(10)
@@ -98,7 +80,6 @@ struct ProfileView: View {
                             showAnimeView.toggle()
                         } label: {
                             Image(systemName: "magnifyingglass")
-                                .foregroundColor(.white)
                         }
                         
                         Spacer()
@@ -107,13 +88,15 @@ struct ProfileView: View {
                             print("Manga")
                         } label: {
                             Text("Manga Random")
-                                .foregroundColor(.white)
                                 .padding(.all, 10)
                                 .background(Color.purple.opacity(0.75))
                                 .cornerRadius(10)
                         }
                     }
+                    .font(.lovelo())
                     .padding(.horizontal)
+                    .minimumScaleFactor(0.5)
+                    .tint(.accentColor)
                 }
             }
         }

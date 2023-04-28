@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum RateOptions: CaseIterable {
+enum RateOptions: CaseIterable, Codable {
   case finished
   case dropped
   case InProgress

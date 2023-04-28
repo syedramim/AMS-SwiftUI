@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ValuePicker: View {
-    @Binding var selection: Int
+    @Binding var selection: Int?
     let range: ClosedRange<Int>
     let title: String
     
@@ -16,12 +16,13 @@ struct ValuePicker: View {
         VStack {
             
             Text(title)
-                .font(.headline)
+                .font(.lovelo(30))
                 .foregroundColor(.accentColor)
             
             Picker(selection: $selection, label: Text("")) {
                 ForEach(range, id: \.self) { number in
                     Text("\(number)")
+                        .foregroundColor(.accentColor)
                         .tag(number)
                 }
             }
@@ -31,6 +32,7 @@ struct ValuePicker: View {
             .cornerRadius(10)
             .clipped()
             .pickerStyle(.wheel)
+            
         }
     }
 }

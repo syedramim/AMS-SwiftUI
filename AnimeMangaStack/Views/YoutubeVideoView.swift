@@ -9,16 +9,13 @@ import SwiftUI
 import WebKit
 
 struct YoutubeVideoView: UIViewRepresentable {
-    
     var videoID: String
     
     func makeUIView(context: Context) -> WKWebView  {
-        
         WKWebView()
     }
     
     func updateUIView(_ uiView: WKWebView, context: Context) {
-        
         let path = "https://www.youtube.com/embed/\(videoID)"
         guard let url = URL(string: path) else { return }
         

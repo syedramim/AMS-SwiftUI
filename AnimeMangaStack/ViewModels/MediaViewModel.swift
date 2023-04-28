@@ -9,31 +9,6 @@ import Foundation
 import SwiftUI
 
 struct MediaViewModel {
-    
-    static func infoBox(title: String, color: Color) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(title)
-                .font(.title2)
-                .bold()
-                .foregroundColor(color)
-                .padding(.bottom, 8)
-            
-            RoundedRectangle(cornerRadius: 15)
-                .fill(Color.gray.opacity(0.2))
-                .frame(height: 150)
-                .overlay(
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Content:")
-                            .font(.headline)
-                            .foregroundColor(Color.gray)
-                            .multilineTextAlignment(.leading)
-                    }
-                        .padding(.leading)
-                )
-        }
-    }
-    
-    
     static func mediaCard(text: String, imageURL: String) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(text)

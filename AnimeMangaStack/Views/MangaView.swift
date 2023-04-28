@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MangaView: View {
     @State var manga: Manga
+    @State private var rateMangaPressed = false
 
     var body: some View {
         GeometryReader { geometry in
@@ -63,13 +64,16 @@ struct MangaView: View {
                         }
                         .padding()
                         Button {
-                            
+                            rateMangaPressed.toggle()
                         } label: {
                             RateButton(isAnime: false)
                         }
                     }
                 }
                 .navigationBarBackButtonHidden()
+            }
+            .fullScreenCover(isPresented: $rateMangaPressed) {
+                RateMangaView(manga: manga)
             }
         }
     }

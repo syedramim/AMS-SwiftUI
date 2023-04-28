@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AnimeView: View {
     @State var anime: Anime
+    @State private var rateAnimePressed = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -96,7 +97,7 @@ struct AnimeView: View {
                         }
                         
                         Button {
-                            
+                            rateAnimePressed.toggle()
                         } label: {
                             RateButton(isAnime: true)
                         }
@@ -104,6 +105,9 @@ struct AnimeView: View {
                     }
                 }
                 .navigationBarBackButtonHidden()
+            }
+            .fullScreenCover(isPresented: $rateAnimePressed) {
+                RateAnimeView(anime: anime)
             }
         }
     }
