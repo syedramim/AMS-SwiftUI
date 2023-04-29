@@ -1,7 +1,6 @@
 //
 //  LoginView.swift
 //  AnimeMangaStack
-//
 //  Created by Kaneis Zontanos on 4/23/23.
 //
 
