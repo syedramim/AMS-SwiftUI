@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RateAnimeView: View {
+    @EnvironmentObject var profileVM: ProfileViewModel
     @Environment(\.dismiss) private var dismiss
     @State var anime: Anime
     @State private var status: RateOptions = .finished
@@ -57,7 +58,7 @@ struct RateAnimeView: View {
                 .pickerStyle(.wheel)
             }
             .padding()
-
+            
             
             ValuePicker(selection: $watchedEpisodes, range: 0...(anime.episodes ?? 0), title: "Episodes Watched:")
                 .padding()
@@ -65,7 +66,14 @@ struct RateAnimeView: View {
             Spacer()
             
             Button(action: {
-                // Save the rating and dismiss the view
+                Task {
+                    do {
+                        try await profileVM.addAnimeToProfile(anime: anime, status: status, score: score, watchedEpisodes: watchedEpisodes!)
+                        dismiss()
+                    } catch {
+                        print("Error appending anime to profile: \(error)")
+                    }
+                }
                 dismiss()
             }, label: {
                 Text("Save Rating")
@@ -81,7 +89,7 @@ struct RateAnimeView: View {
             
         }
         .background(LinearGradient(gradient: Gradient(colors: [Color("launchScreenColor"), Color.black]), startPoint: .top, endPoint: .bottom)
-                        .ignoresSafeArea())
+            .ignoresSafeArea())
     }
 }
 
@@ -115,7 +123,8 @@ struct RateAnimeView_Previews: PreviewProvider {
             licensors: [Names(name: "Funimation"), Names(name: "Crunchyroll")],
             studios: [Names(name: "Wit Studio")]
         )
-
+        
         RateAnimeView(anime: anime)
+            .environmentObject(ProfileViewModel())
     }
 }

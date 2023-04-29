@@ -22,10 +22,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct AnimeMangaStackApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject var profileVM = ProfileViewModel()
     
     var body: some Scene {
         WindowGroup {
             LoginView()
+                .environmentObject(profileVM)
         }
     }
 }

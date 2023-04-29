@@ -11,14 +11,44 @@ import FirebaseFirestore
 import FirebaseStorage
 import UIKit
 
+enum ProfileError: Error {
+    case profileWasNil
+}
+
+@MainActor
 class ProfileViewModel: ObservableObject {
     @Published var profile = Profile()
     @Published var email = Auth.auth().currentUser?.email?.replacingOccurrences(of: "@.*", with: "", options: .regularExpression)
+
+    private var db = Firestore.firestore()
+
+    init() {
+        Task {
+            await fetchProfile()
+        }
+    }
     
-    func saveProfile(profile: Profile) async -> String? {
+    func fetchProfile() async {
+        guard let userEmail = self.email else {
+            print("Error: No user is logged in.")
+            return
+        }
+        do {
+            let querySnapshot = try await db.collection("profiles").whereField("email", isEqualTo: userEmail).getDocuments()
+            if let document = querySnapshot.documents.first {
+                self.profile = try document.data(as: Profile.self) ?? Profile()
+            }
+        } catch {
+            print("Error fetching profile: \(error)")
+        }
+    }
+    
+    func saveProfile() async -> String? {
         let db = Firestore.firestore()
+        profile.email = self.email
         if let id = profile.id {
             do {
+                print("Profile dictionary: \(profile.dictionary)")
                 try await db.collection("profiles").document(id).setData(profile.dictionary)
                 print("😎 Data updated successfully!")
                 return profile.id
@@ -28,6 +58,7 @@ class ProfileViewModel: ObservableObject {
             }
         } else {
             do {
+                print("Profile dictionary: \(profile.dictionary)")
                 let docRef = try await db.collection("profiles").addDocument(data: profile.dictionary)
                 print("🐣 Data added successfully!")
                 return docRef.documentID
@@ -37,23 +68,44 @@ class ProfileViewModel: ObservableObject {
             }
         }
     }
+
     
-    func deleteData(profile: Profile) async {
-        let db = Firestore.firestore()
-        guard let id = profile.id else {
-            print("😡 ERROR: id was nil. This should not have happened.")
-            return
+    func addAnimeToProfile(newAnime: userAnime) async -> String? {
+        if profile.id == nil {
+            _ = await saveProfile()
         }
-        
-        do {
-            try await db.collection("profiles").document(id).delete()
-            print("🗑️ Document successfully removed")
-            return
-        } catch {
-            print("😡 ERROR: removing document \(error.localizedDescription).")
-            return
+        if profile.animesWatched == nil {
+            profile.animesWatched = [newAnime]
+        } else {
+            profile.animesWatched?.append(newAnime)
         }
+        return await saveProfile()
+    }
+
+    func addMangaToProfile(newManga: userManga) async -> String? {
+        if profile.id == nil {
+            _ = await saveProfile()
+        }
+        if profile.mangasRead == nil {
+            profile.mangasRead = [newManga]
+        } else {
+            profile.mangasRead?.append(newManga)
+        }
+        return await saveProfile()
+    }
+
+
+    func addAnimeToProfile(anime: Anime, status: RateOptions, score: Int, watchedEpisodes: Int) async throws {
+        let newAnime = userAnime(anime: anime, status: status, score: score, watchedEpisodes: watchedEpisodes)
+        _ = try await addAnimeToProfile(newAnime: newAnime)
+    }
+
+    func addMangaToProfile(manga: Manga, status: RateOptions, score: Int, readChapters: Int, readVolumes: Int) async throws {
+        let newManga = userManga(manga: manga, status: status, score: score, readChapters: readChapters, readVolumes: readVolumes)
+        _ = try await addMangaToProfile(newManga: newManga)
     }
 }
+
+
 
 

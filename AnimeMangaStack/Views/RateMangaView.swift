@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RateMangaView: View {
+    @EnvironmentObject var profileVM: ProfileViewModel
     @Environment(\.dismiss) private var dismiss
     @State var manga: Manga
     @State private var status: RateOptions = .finished
@@ -66,7 +67,15 @@ struct RateMangaView: View {
             Spacer()
             
             Button(action: {
-                // Save the rating and dismiss the view
+                Task {
+                    do {
+                        try await profileVM.addMangaToProfile(manga: manga, status: status, score: score, readChapters: readChapters!, readVolumes: readVolumes!)
+                        dismiss()
+                    } catch {
+                        print("Error appending anime to profile: \(error)")
+                    }
+
+                }
                 dismiss()
             }, label: {
                 Text("Save Rating")
@@ -115,6 +124,7 @@ struct RateMangaView_Previews: PreviewProvider {
         )
 
         RateMangaView(manga: manga)
+            .environmentObject(ProfileViewModel())
     }
 }
 

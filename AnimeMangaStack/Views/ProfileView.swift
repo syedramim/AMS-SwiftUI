@@ -7,7 +7,9 @@
 
 import SwiftUI
 import Firebase
+import FirebaseAuth
 import FirebaseFirestoreSwift
+
 
 struct ProfileView: View {
     @Environment(\.dismiss) private var dismiss
@@ -45,6 +47,12 @@ struct ProfileView: View {
                     .minimumScaleFactor(0.5)
                     
                     Spacer()
+                    
+                    ForEach(profileVM.profile.mangasRead ?? [], id: \.manga.id) { userManga in
+                        Text(userManga.manga.title ?? "Not Found")
+                            .font(.lovelo())
+                            .foregroundColor(.accentColor)
+                    }
                 }
                 
             }
@@ -119,6 +127,7 @@ struct ProfileView: View {
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
         ProfileView()
+            .environmentObject(ProfileViewModel())
     }
 }
 

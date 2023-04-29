@@ -20,11 +20,27 @@ struct Manga: Codable, Identifiable {
     var genres: [Names]
     var demographics: [Names]
     var serializations: [Names]
-
+    
     
     
     enum CodingKeys: CodingKey {
         case title, chapters, status, rating, synopsis, images, genres, demographics, score, volumes, serializations
+    }
+    
+    var dictionary: [String: Any] {
+        return [
+            "title": title ?? "",
+            "chapters": chapters ?? 0,
+            "volumes": volumes ?? 0,
+            "status": status ?? "",
+            "rating": rating ?? "",
+            "synopsis": synopsis ?? "",
+            "images": images.dictionary,
+            "score": score ?? 0.0,
+            "genres": genres.map { $0.dictionary },
+            "demographics": demographics.map { $0.dictionary },
+            "serializations": serializations.map { $0.dictionary }
+        ]
     }
 }
 

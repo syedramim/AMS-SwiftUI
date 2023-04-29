@@ -45,13 +45,16 @@ struct AnimeSearchView: View {
                             ForEach(animeVM.animeArray) { anime in
                                 if (anime.rating?.contains("Hentai") == true) || (anime.images.jpg.large_image_url?.contains("apple-touch-icon") == true) {}
                                 else {
-                                    MediaViewModel.mediaCard(text: anime.title ?? "Not Found", imageURL: anime.images.jpg.large_image_url ?? "")
+                                    MediaViewModel.mediaCard(text: anime.title ?? "Not Found",
+                                                             imageURL: anime.images.jpg.large_image_url ?? "",
+                                                             synopsis: anime.synopsis ?? "more...",
+                                                             genres: anime.genres.map { $0.name ?? "more..." }.joined(separator: ", "),
+                                                             demographics: anime.demographics.map { $0.name ?? "more..." }.joined(separator: ", "))
                                         .padding(.bottom, 8)
                                         .onTapGesture {
                                             selectedAnime = anime
                                         }
                                 }
-
                                 
                             }
                         }

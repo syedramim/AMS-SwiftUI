@@ -45,14 +45,16 @@ struct MangaSearchView: View {
                             ForEach(mangaVM.mangaArray) { manga in
                                 if (manga.rating?.contains("Hentai") == true) || (manga.images.jpg.large_image_url?.contains("apple-touch-icon") == true) {}
                                 else {
-                                    MediaViewModel.mediaCard(text: manga.title ?? "Not Found", imageURL: manga.images.jpg.large_image_url ?? "")
+                                    MediaViewModel.mediaCard(text: manga.title ?? "Not Found",
+                                                             imageURL: manga.images.jpg.large_image_url ?? "",
+                                                             synopsis: manga.synopsis ?? "more...",
+                                                             genres: manga.genres.map { $0.name ?? "more..." }.joined(separator: ", "),
+                                                             demographics: manga.demographics.map { $0.name ?? "more..." }.joined(separator: ", "))
                                         .padding(.bottom, 8)
                                         .onTapGesture {
                                             selectedManga = manga
                                         }
                                 }
-
-                                
                             }
                         }
                         .padding([.horizontal, .bottom])

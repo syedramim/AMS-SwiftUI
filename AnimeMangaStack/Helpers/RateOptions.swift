@@ -7,25 +7,16 @@
 
 import Foundation
 
-enum RateOptions: CaseIterable, Codable {
-  case finished
-  case dropped
-  case InProgress
-  case OnHold
+enum RateOptions: String, CaseIterable, Codable {
+    case finished = "Finished"
+    case dropped = "Dropped"
+    case inProgress = "In Progress"
+    case onHold = "On Hold"
     
     var contentStatus: String {
-        switch self {
-        case .finished:
-            return "Finished"
-        case .dropped:
-            return "Dropped"
-        case .InProgress:
-            return "In Progress"
-        case .OnHold:
-            return "On Hold"
-        }
-        
+        return self.rawValue
     }
 }
+
 
 

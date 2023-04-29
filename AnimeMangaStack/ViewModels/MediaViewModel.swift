@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct MediaViewModel {
-    static func mediaCard(text: String, imageURL: String) -> some View {
+    static func mediaCard(text: String, imageURL: String, synopsis: String, genres: String, demographics: String) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(text)
                 .font(.lovelo())
@@ -34,7 +34,22 @@ struct MediaViewModel {
                                     
                                 }
                             Spacer()
+                            
+                            VStack {
+                                Spacer()
+                                Text("Synopsis: \(synopsis)")
+                                Spacer()
+                                Text("Genres: \(genres)")
+                                Spacer()
+                                Text("Demographics: \(demographics)")
+                                Spacer()
+                            }
+                            .font(.lovelo(15))
+                            .foregroundColor(.accentColor)
+                            .minimumScaleFactor(0.5)
+                            .lineLimit(1)
                         }
+                        .padding()
                     }
                 )
         }
