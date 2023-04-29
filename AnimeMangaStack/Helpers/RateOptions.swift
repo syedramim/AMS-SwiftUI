@@ -2,7 +2,7 @@
 //  RateOptions.swift
 //  AnimeMangaStack
 //  Created by Kaneis Zontanos on 4/28/23.
-//
+
 
 import Foundation
 
