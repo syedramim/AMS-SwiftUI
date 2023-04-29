@@ -16,10 +16,13 @@ struct ProfileView: View {
     @EnvironmentObject var profileVM: ProfileViewModel
     @FirestoreQuery(collectionPath: "profiles") var profiles: [Profile]
     
+    @State private var selectedManga: Manga?
+    @State private var selectedAnime: Anime?
     @State private var showAnimeView = false
     @State private var showMangaView = false
     @State private var showLoginView = false
-    
+    @State private var showAnimePage = false
+    @State private var showMangaPage = false
     
     var body: some View {
         NavigationStack {
@@ -30,8 +33,7 @@ struct ProfileView: View {
                 
                 VStack {
                     VStack {
-                        Image("launchscreen")
-                            .resizable()
+                        MediaViewModel.getImage(imageURL: profileVM.links.randomElement() ?? "https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png")
                             .scaledToFit()
                             .frame(width: 120, height: 120)
                             .clipShape(Circle())
@@ -48,13 +50,58 @@ struct ProfileView: View {
                     
                     Spacer()
                     
-                    ForEach(profileVM.profile.mangasRead ?? [], id: \.manga.id) { userManga in
-                        Text(userManga.manga.title ?? "Not Found")
-                            .font(.lovelo())
-                            .foregroundColor(.accentColor)
+                    ScrollView {
+                        VStack {
+                            Spacer()
+                            
+                            Text("Watched Animes")
+                                .font(.lovelo())
+                                .bold()
+                                .foregroundColor(.accentColor)
+                                .padding(.bottom, 20)
+                            
+                            ForEach(profileVM.profile.animesWatched, id: \.id) { watched in
+                                let anime = watched.anime
+                                MediaViewModel.mediaCard(text: anime.title ?? "Not Found",
+                                                         imageURL: anime.images.jpg.large_image_url ?? "",
+                                                         synopsis: anime.synopsis ?? "more...",
+                                                         genres: anime.genres.map { $0.name ?? "more..." }.joined(separator: ", "),
+                                                         demographics: anime.demographics.map { $0.name ?? "more..." }.joined(separator: ", "))
+                                .onTapGesture {
+                                    showAnimePage.toggle()
+                                    selectedAnime = anime
+                                }
+                                Spacer()
+                            }
+                            
+                            Spacer()
+                            
+                            Text("Read Mangas")
+                                .font(.lovelo())
+                                .bold()
+                                .foregroundColor(.accentColor)
+                                .padding(.bottom, 20)
+                            
+                            Spacer()
+                            
+                            ForEach(profileVM.profile.mangasRead, id: \.id) { read in
+                                let manga = read.manga
+                                MediaViewModel.mediaCard(text: manga.title ?? "Not Found",
+                                                         imageURL: manga.images.jpg.large_image_url ?? "",
+                                                         synopsis: manga.synopsis ?? "more...",
+                                                         genres: manga.genres.map { $0.name ?? "more..." }.joined(separator: ", "),
+                                                         demographics: manga.demographics.map { $0.name ?? "more..." }.joined(separator: ", "))
+                                .onTapGesture {
+                                    showMangaPage.toggle()
+                                    selectedManga = manga
+                                }
+                                
+                            }
+                        }
+                        
                     }
+                    
                 }
-                
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -70,43 +117,20 @@ struct ProfileView: View {
                     .font(.lovelo())
                 }
                 
-                
                 ToolbarItem(placement: .bottomBar) {
-                    HStack {
-                        Button {
-                            print("Anime")
-                        } label: {
-                            Text("Anime Random")
-                                .padding(.all, 10)
-                                .background(Color.purple.opacity(0.75))
-                                .cornerRadius(10)
-                        }
-                        
-                        Spacer()
-                        
-                        Button {
-                            showAnimeView.toggle()
-                        } label: {
-                            Image(systemName: "magnifyingglass")
-                        }
-                        
-                        Spacer()
-                        
-                        Button {
-                            print("Manga")
-                        } label: {
-                            Text("Manga Random")
-                                .padding(.all, 10)
-                                .background(Color.purple.opacity(0.75))
-                                .cornerRadius(10)
-                        }
+                    Button {
+                        showAnimeView.toggle()
+                    } label: {
+                        Image(systemName: "magnifyingglass")
                     }
                     .font(.lovelo())
                     .padding(.horizontal)
                     .minimumScaleFactor(0.5)
                     .tint(.accentColor)
+                    .buttonStyle(.borderedProminent)
                 }
             }
+            
         }
         .fullScreenCover(isPresented: $showAnimeView) {
             AnimeSearchView(isMangaView: $showMangaView)
@@ -117,12 +141,18 @@ struct ProfileView: View {
         .fullScreenCover(isPresented: $showLoginView) {
             LoginView()
         }
-        
+        .sheet(item: $selectedAnime) { anime in
+            AnimeView(anime: anime)
+        }
+        .sheet(item: $selectedManga) { manga in
+            MangaView(manga: manga)
+        }
     }
     
 }
 
-    
+
+
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {

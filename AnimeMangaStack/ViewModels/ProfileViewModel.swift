@@ -19,9 +19,10 @@ enum ProfileError: Error {
 class ProfileViewModel: ObservableObject {
     @Published var profile = Profile()
     @Published var email = Auth.auth().currentUser?.email?.replacingOccurrences(of: "@.*", with: "", options: .regularExpression)
-
+    @Published var links: [String] = []
+    
     private var db = Firestore.firestore()
-
+    
     init() {
         Task {
             await fetchProfile()
@@ -36,7 +37,13 @@ class ProfileViewModel: ObservableObject {
         do {
             let querySnapshot = try await db.collection("profiles").whereField("email", isEqualTo: userEmail).getDocuments()
             if let document = querySnapshot.documents.first {
-                self.profile = try document.data(as: Profile.self) ?? Profile()
+                self.profile = try document.data(as: Profile.self)
+                self.profile.animesWatched.forEach { anime in
+                    self.links.append(anime.anime.images.jpg.large_image_url ?? "launchscreen")
+                }
+                self.profile.mangasRead.forEach { manga in
+                    self.links.append(manga.manga.images.jpg.large_image_url ?? "launchscreen")
+                }
             }
         } catch {
             print("Error fetching profile: \(error)")
@@ -68,7 +75,7 @@ class ProfileViewModel: ObservableObject {
             }
         }
     }
-
+    
     
     func addAnimeToProfile(newAnime: userAnime) async -> String? {
         if profile.id == nil {
@@ -77,11 +84,11 @@ class ProfileViewModel: ObservableObject {
         if profile.animesWatched == nil {
             profile.animesWatched = [newAnime]
         } else {
-            profile.animesWatched?.append(newAnime)
+            profile.animesWatched.append(newAnime)
         }
         return await saveProfile()
     }
-
+    
     func addMangaToProfile(newManga: userManga) async -> String? {
         if profile.id == nil {
             _ = await saveProfile()
@@ -89,17 +96,17 @@ class ProfileViewModel: ObservableObject {
         if profile.mangasRead == nil {
             profile.mangasRead = [newManga]
         } else {
-            profile.mangasRead?.append(newManga)
+            profile.mangasRead.append(newManga)
         }
         return await saveProfile()
     }
-
-
+    
+    
     func addAnimeToProfile(anime: Anime, status: RateOptions, score: Int, watchedEpisodes: Int) async throws {
         let newAnime = userAnime(anime: anime, status: status, score: score, watchedEpisodes: watchedEpisodes)
         _ = try await addAnimeToProfile(newAnime: newAnime)
     }
-
+    
     func addMangaToProfile(manga: Manga, status: RateOptions, score: Int, readChapters: Int, readVolumes: Int) async throws {
         let newManga = userManga(manga: manga, status: status, score: score, readChapters: readChapters, readVolumes: readVolumes)
         _ = try await addMangaToProfile(newManga: newManga)

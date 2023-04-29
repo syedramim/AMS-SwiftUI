@@ -21,7 +21,7 @@ struct MediaViewModel {
                 .fill(Color.gray.opacity(0.2))
                 .frame(height: 150)
                 .overlay(
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: 0) {
                         HStack {
                             RoundedRectangle(cornerRadius: 15)
                                 .fill(Color.gray.opacity(0.2))

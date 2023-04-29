@@ -13,8 +13,8 @@ struct RateMangaView: View {
     @State var manga: Manga
     @State private var status: RateOptions = .finished
     @State private var score: Int = 0
-    @State private var readChapters: Int? = 0
-    @State private var readVolumes: Int? = 0
+    @State private var readChapters: Int = 0
+    @State private var readVolumes: Int = 0
     
     var body: some View {
         VStack(alignment: .center) {
@@ -69,7 +69,7 @@ struct RateMangaView: View {
             Button(action: {
                 Task {
                     do {
-                        try await profileVM.addMangaToProfile(manga: manga, status: status, score: score, readChapters: readChapters!, readVolumes: readVolumes!)
+                        try await profileVM.addMangaToProfile(manga: manga, status: status, score: score, readChapters: readChapters, readVolumes: readVolumes)
                         dismiss()
                     } catch {
                         print("Error appending anime to profile: \(error)")

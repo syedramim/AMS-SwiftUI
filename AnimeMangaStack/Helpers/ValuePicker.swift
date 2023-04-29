@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ValuePicker: View {
-    @Binding var selection: Int?
+    @Binding var selection: Int
     let range: ClosedRange<Int>
     let title: String
     

@@ -13,7 +13,7 @@ struct RateAnimeView: View {
     @State var anime: Anime
     @State private var status: RateOptions = .finished
     @State private var score: Int = 0
-    @State private var watchedEpisodes: Int? = 0
+    @State private var watchedEpisodes: Int = 0
     
     
     var body: some View {
@@ -68,7 +68,7 @@ struct RateAnimeView: View {
             Button(action: {
                 Task {
                     do {
-                        try await profileVM.addAnimeToProfile(anime: anime, status: status, score: score, watchedEpisodes: watchedEpisodes!)
+                        try await profileVM.addAnimeToProfile(anime: anime, status: status, score: score, watchedEpisodes: watchedEpisodes)
                         dismiss()
                     } catch {
                         print("Error appending anime to profile: \(error)")
