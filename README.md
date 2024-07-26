@@ -1,7 +1,6 @@
 # AMS-SwiftUI
 
-A SwiftUI project for tracking anime and manga, developed to demonstrate iOS development skills using SwiftUI and Firebase.
-
+AMS-SwiftUI is a comprehensive iOS application designed for tracking anime and manga, showcasing advanced iOS development skills using SwiftUI and Firebase. This project demonstrates key software development principles, including MVVM architecture, real-time data synchronization, and secure user authentication.
 ## Features
 
 - **User Authentication**: Secure login and user management using Firebase.
