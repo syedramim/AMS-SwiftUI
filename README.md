@@ -12,7 +12,7 @@ A SwiftUI project for tracking anime and manga, developed to demonstrate iOS dev
 
 ## Video Demo
 
-[Watch the video demo](demo.mp4)
+[Watch the video demo](Demo.mp4)
 
 ## Screenshots
 
