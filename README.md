@@ -11,7 +11,10 @@ AMS-SwiftUI is a comprehensive iOS application designed for tracking anime and m
 
 ## Video Demo
 
-[Watch the video demo](Demo.mp4)
+<video width="600" controls>
+  <source src="Demo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 ## Screenshots
 
