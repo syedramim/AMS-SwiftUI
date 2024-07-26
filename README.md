@@ -15,9 +15,13 @@ AMS-SwiftUI is a comprehensive iOS application designed for tracking anime and m
 
 ## Screenshots
 
-![Login Screen](Demo.mp4)
-![Dashboard](screenshots/dashboard.png)
-![Detail View](screenshots/detail.png)
+<p float="left">
+  <img src="demo_images/Login.png" height="400">
+  <img src="demo_images/Base.png" height="400">
+  <img src="demo_images/MangaSearch.png" height="400">
+  <img src="demo_images/SpecificManga.png" height="400">
+   <img src="demo_images/ssManga.png" height="400">
+</p>
 
 ## Getting Started
 
