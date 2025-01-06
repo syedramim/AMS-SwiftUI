@@ -33,8 +33,8 @@ struct ProfileView: View {
                 VStack {
                     VStack {
                         MediaViewModel.getImage(imageURL: profileVM.links.randomElement() ?? "https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png")
-                            .scaledToFit()
                             .frame(width: 120, height: 120)
+                            .scaledToFit()
                             .clipShape(Circle())
                             .overlay(Circle().stroke(Color.accentColor, lineWidth: 5))
                             .padding(.top, 10)
